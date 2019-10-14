@@ -52,7 +52,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'zenithworksprojectTest.ignitedemo1'
+    environment: 'zenithworksazure-voting-app-redis.ignitedemo1'
     strategy:
       runOnce:
         deploy:
