@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: zenithworksazurevotingappredis 
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zenithworksazurevotingappredis 
+    spec:
+      containers:
+        - name: zenithworksazurevotingappredis 
+          image: raireg1.azurecr.io/zenithworksazurevotingappredis
+          ports:
+          - containerPort: 80
