@@ -19,7 +19,7 @@ variables:
   imagePullSecret: 'raireg13255727b-auth'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'igniteDemoPool'
 
 stages:
 - stage: Build
@@ -27,8 +27,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool:
-      vmImage: $(vmImageName)
+    pool: 'igniteDemoPool'
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -49,8 +48,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
+    pool: 'igniteDemoPool'
     environment: 'zenithworksazurevotingappredis-2507.ignitedemo1'
     strategy:
       runOnce:
