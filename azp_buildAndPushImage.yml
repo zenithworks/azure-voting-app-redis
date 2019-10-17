@@ -11,7 +11,7 @@ resources:
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '064c0225-58a3-4625-ba03-64313fa2f1e9'
+  dockerRegistryServiceConnection: 'raireg1'
   imageRepository: 'zenithworksazurevotingappredis'
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
@@ -19,7 +19,7 @@ variables:
   imagePullSecret: 'raireg13255727b-auth'
 
   # Agent VM image name
-  vmImageName: 'igniteDemoPool'
+  vmImageName: 'RaiAgents'
 
 stages:
 - stage: Build
