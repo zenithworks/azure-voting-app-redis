@@ -16,7 +16,7 @@ variables:
   dockerRegistryServiceConnection: 'raireg1'
   imageRepository: 'zenithworksazurevotingappredis'
   containerRegistry: 'raireg1.azurecr.io'
-  dockerfilePath: '/azure-vote/'
+  dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'raireg13255727b-auth'
 
