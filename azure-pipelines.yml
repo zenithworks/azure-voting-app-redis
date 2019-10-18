@@ -1,17 +1,8 @@
-# Deploy to Azure Kubernetes Service
-# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
-
+trigger:
+- features/canaryDeployment
 
 resources:
-  containers:
-  - container: myACRContainer  
-    type: ACR
-    subscription: RMPM
-    registry: 'raireg1.azurecr.io'
-    image: zenithworksazurevotingappredis
-
+- repo: self
 
 variables:
 
@@ -23,6 +14,8 @@ variables:
   tag: '$(Build.BuildId)'
   imagePullSecret: 'raireg11795044f-auth'
 
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -32,5 +25,55 @@ stages:
     displayName: Build
     pool: 'igniteDemoPool'
     steps:
-    - script:
-        echo "Hello world"
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          
+    - upload: manifests
+      artifact: manifests
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool: 'igniteDemoPool'
+    environment: 'zenithworksazurevotingappredis-1182.ignitedemo1'
+    strategy:
+      canary:
+        increments: [25]
+      preDeploy:
+        steps:
+        - script:
+            echo $(strategy.name)
+      deploy:
+        steps:
+        - script: |
+            echo Strategy: $(strategy.name)
+            echo Increment: $(strategy.increment)
+            echo "Deploying to cluster..."
+        
+      postRouteTraffic:
+        pool: server
+        steps:
+          - task: Delay@1
+            inputs:
+              delayForMinutes: '2'
+          - script:
+              echo Run ACA task
+      on:
+        failure:
+          steps:
+          - script: |
+            echo "Deployment failed..."
+        success:
+          steps:
+          - script: |
+            echo "Deployment will be succeeded..."
