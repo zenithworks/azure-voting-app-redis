@@ -1,5 +1,5 @@
 trigger:
-- features/canaryDeployment
+- master
 
 resources:
 - repo: self
