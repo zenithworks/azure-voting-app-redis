@@ -1,0 +1,31 @@
+
+resources:
+  containers:
+  - container: myACRContainer  
+    type: ACR
+    subscription: RMPM
+    registry: 'raireg1.azurecr.io'
+    image: zenithworksazurevotingappredis
+
+
+variables:
+
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '2f607f0b-9bc5-43c0-b522-772c20cd72de'
+  imageRepository: 'zenithworksazurevotingappredis'
+  containerRegistry: 'raireg1.azurecr.io'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+  imagePullSecret: 'raireg11795044f-auth'
+
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool: 'igniteDemoPool'
+    steps:
+    - script:
+        echo "Hello world"
