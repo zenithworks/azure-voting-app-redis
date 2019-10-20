@@ -70,7 +70,7 @@ stages:
           #    manifests: 'manifest.yml'
           #    imagePullSecrets: ''
         postRouteTraffic:
-          #pool: server
+          pool: server
           steps:
             - task: Delay@1
               inputs:
