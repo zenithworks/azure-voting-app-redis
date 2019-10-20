@@ -52,20 +52,20 @@ stages:
         preDeploy:
           steps:
           - task: Delay@1
-              inputs:
-                delayForMinutes: '2'
+            inputs:
+              delayForMinutes: '2'
         deploy:
           steps:
           - task: Delay@1
-              inputs:
-                delayForMinutes: '2'
+            inputs:
+              delayForMinutes: '2'
           
         postRouteTraffic:
           pool: server
           steps:
           - task: Delay@1
-              inputs:
-                delayForMinutes: '2'
+            inputs:
+              delayForMinutes: '2'
             - bash:
                 echo Run ACA task
         on:
