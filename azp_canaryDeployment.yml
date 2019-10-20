@@ -66,8 +66,8 @@ stages:
           - task: Delay@1
             inputs:
               delayForMinutes: '2'
-            - bash:
-                echo Run ACA task
+          - bash:
+               echo Run ACA task
         on:
           failure:
             steps:
