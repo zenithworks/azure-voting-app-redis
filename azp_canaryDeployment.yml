@@ -1,4 +1,4 @@
-trigger:
+  trigger:
 - master
 
 resources:
@@ -49,31 +49,31 @@ stages:
     strategy:
       canary:
         increments: [25]
-      preDeploy:
-        steps:
-        - script:
-            echo $(strategy.name)
-      deploy:
-        steps:
-        - script: |
-            echo Strategy: $(strategy.name)
-            echo Increment: $(strategy.increment)
-            echo "Deploying to cluster..."
-        
-      postRouteTraffic:
-        pool: server
-        steps:
-          - task: Delay@1
-            inputs:
-              delayForMinutes: '2'
+        preDeploy:
+          steps:
           - script:
-              echo Run ACA task
-      on:
-        failure:
+              echo $(strategy.name)
+        deploy:
           steps:
           - script: |
-            echo "Deployment failed..."
-        success:
+              echo Strategy: $(strategy.name)
+              echo Increment: $(strategy.increment)
+              echo "Deploying to cluster..."
+          
+        postRouteTraffic:
+          pool: server
           steps:
-          - script: |
-            echo "Deployment will be succeeded..."
+            - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
+            - script:
+                echo Run ACA task
+        on:
+          failure:
+            steps:
+            - script: |
+              echo "Deployment failed..."
+          success:
+            steps:
+            - script: |
+              echo "Deployment will be succeeded..."
