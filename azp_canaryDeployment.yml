@@ -78,9 +78,7 @@ stages:
         on:
           failure:
             steps:
-            - script: |
-              echo Deployment failed
-              echo Rolling back...
+            - script: echo deployment failed...
             #- task: KubernetesManifest@0
             #  inputs:
             #    action: 'reject'
@@ -90,9 +88,7 @@ stages:
             #    manifests: 'manifest.yml'
           success:
             steps:
-            - script: |
-              echo canaray succeeded
-              echo promoting...
+            - script: echo deployment succeeded...              
             #- task: KubernetesManifest@0 
             #  inputs:
             #    action: 'promote'
