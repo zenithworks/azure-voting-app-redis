@@ -1,0 +1,22 @@
+trigger: none
+
+resources:
+- repo: self
+
+variables:
+  system.debug: 'true'
+stages:
+- stage: DeployStage
+  jobs:
+  - deployment: "DeploymentJob"
+      environment:
+        name: rai-vm
+        tags: prod
+        resourceType: virtualmachine
+      pool: igniteDemoPool
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - script: echo Deploying to VM
+              displayName: VMDeployScript       
