@@ -5,7 +5,8 @@ resources:
 - repo: self
 
 variables:
-  system.debug: true
+
+  system.debug: 'true'
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '2f607f0b-9bc5-43c0-b522-772c20cd72de'
   imageRepository: 'zenithworksazurevotingappredis'
@@ -51,19 +52,51 @@ stages:
         increments: [25]
         preDeploy:
           steps:
-          
+          - script:
+              echo $(strategy.name)
         deploy:
           steps:
-         
-          
+          - script: |
+              echo Strategy: $(strategy.name)
+              echo Increment: $(strategy.increment)
+
+          #- task: KubernetesManifest@0
+          #  inputs:
+          #    action: 'deploy'
+          #    kubernetesServiceConnection: ''
+          #    namespace: 'default'
+          #    strategy: $(strategy.name)
+          #    percentage: $(strategy.increment)
+          #    manifests: 'manifest.yml'
+          #    imagePullSecrets: ''
         postRouteTraffic:
-          pool: server
+          #pool: server
           steps:
-         
+            - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
         on:
           failure:
             steps:
-            
+            - script: |
+              echo Deployment failed
+              echo Rolling back...
+            #- task: KubernetesManifest@0
+            #  inputs:
+            #    action: 'reject'
+            #    kubernetesServiceConnection: ''
+            #    namespace: 'default'
+            #    strategy: $(strategy.name)
+            #    manifests: 'manifest.yml'
           success:
             steps:
-            
+            - script: |
+              echo canaray succeeded
+              echo promoting...
+            #- task: KubernetesManifest@0 
+            #  inputs:
+            #    action: 'promote'
+            #    kubernetesServiceConnection: ''
+            #    namespace: 'default'
+            #    strategy: $(strategy.name)
+            #    manifests: 'manifest.yml'
