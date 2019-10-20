@@ -51,29 +51,31 @@ stages:
         increments: [25]
         preDeploy:
           steps:
-          - script:
-             echo $(strategy.name)
+          - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
         deploy:
           steps:
-          - script: |
-              echo Strategy: $(strategy.name)
-              echo Increment: $(strategy.increment)
-              echo "Deploying to cluster..."
+          - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
           
         postRouteTraffic:
           pool: server
           steps:
-            - task: Delay@1
+          - task: Delay@1
               inputs:
                 delayForMinutes: '2'
-            - script:
+            - bash:
                 echo Run ACA task
         on:
           failure:
             steps:
-            - script: |
-               echo "Deployment failed..."
+            - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
           success:
             steps:
-            - script: |
-               echo "Deployment will be succeeded..."
+            - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
