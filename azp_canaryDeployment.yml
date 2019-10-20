@@ -1,11 +1,10 @@
-  trigger:
-- master
+trigger: none
 
 resources:
 - repo: self
 
 variables:
-
+  system.debug: true
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '2f607f0b-9bc5-43c0-b522-772c20cd72de'
   imageRepository: 'zenithworksazurevotingappredis'
