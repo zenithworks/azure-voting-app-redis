@@ -7,9 +7,11 @@ resources:
     registry: 'raireg1.azurecr.io'
     image: zenithworksazurevotingappredis
 
+resources:
+- repo: self
 
 variables:
-
+  system.debug: 'true'
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '2f607f0b-9bc5-43c0-b522-772c20cd72de'
   imageRepository: 'zenithworksazurevotingappredis'
@@ -18,14 +20,39 @@ variables:
   tag: '$(Build.BuildId)'
   imagePullSecret: 'raireg11795044f-auth'
 
-
-stages:
-- stage: Build
-  displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build
+- stage: Deploy
+  displayName: Deploy stage  
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
     pool: 'igniteDemoPool'
-    steps:
-    - script:
-        echo "Hello world"
+    environment: 'zenithworksazurevotingappredis-1182.ignitedemo1'
+    strategy:
+      canary:
+        increments: [25]
+        preDeploy:
+          steps:
+          - script:
+              echo $(strategy.name)
+              
+        deploy:
+          steps:
+          - script: |
+              echo Strategy: $(strategy.name)
+              echo Increment: $(strategy.increment)
+          
+        postRouteTraffic:
+          pool: server
+          steps:
+            - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
+        on:
+          failure:
+            steps:
+            - script: echo deployment failed...
+            
+          success:
+            steps:
+            - script: echo deployment succeeded...              
+            
