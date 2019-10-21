@@ -44,9 +44,7 @@ variables:
         postRouteTraffic:
           pool: server
           steps:
-            - task: Delay@1
-              inputs:
-                delayForMinutes: '2'
+            - script: echo Running Canary Analysis task
         on:
           failure:
             steps:
