@@ -3,7 +3,7 @@ resources:
   containers:
   - container: myACRContainer  
     type: ACR
-    azureSubscription: raireg1
+    azureSubscription: RMPM
     resourceGroup: raiyan-rg2
     registry: 'raireg1.azurecr.io'
     repository: zenithworksazurevotingappredis
