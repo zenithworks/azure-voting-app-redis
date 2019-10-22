@@ -8,7 +8,7 @@ variables:
 
   system.debug: 'true'
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '2f607f0b-9bc5-43c0-b522-772c20cd72de'
+  dockerRegistryServiceConnection: 'raireg1'
   imageRepository: 'zenithworksazurevotingappredis'
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
