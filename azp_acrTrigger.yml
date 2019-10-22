@@ -5,7 +5,7 @@ resources:
     type: ACR
     azureSubscription: RMPM
     resourceGroup: raiyan-rg2
-    registry: 'raireg1.azurecr.io'
+    registry: 'raireg1'
     repository: zenithworksazurevotingappredis
 
 
