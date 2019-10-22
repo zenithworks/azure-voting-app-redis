@@ -20,15 +20,12 @@ variables:
   imagePullSecret: 'raireg11795044f-auth'
 
 stages:
-- stage: Deploy
-  displayName: Deploy stage    
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build
     pool: 'igniteDemo'
-    environment: 'zenithworksazurevotingappredis.ignitedemo1'
-    strategy:
-      runOnce:
-        deploy:
-          steps:            
-            script: echo hello world
+    steps:
+    - script:
+        echo "Hello world"
