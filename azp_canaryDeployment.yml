@@ -46,7 +46,7 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool: 'igniteDemo'
-    environment: 'zenithworksazurevotingappredis-1182.ignitedemo1'
+    environment: 'zenithworksazurevotingappredis.ignitedemo1'
     strategy:
       canary:
         increments: [25]
