@@ -29,8 +29,8 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool:
-      vmImage: $(vmImageName)
+    pool: 'igniteDemoPool'
+      
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -52,8 +52,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
+    pool: 'igniteDemoPool'
     environment: 'zenithworksazurevotingappredis-7450.ignitedemo1'
     strategy:
       runOnce:
@@ -86,8 +85,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy job
-    pool:
-      vmImage: 'ubuntu-latest'
+    pool: 'igniteDemoPool'
       
     environment: 'zenithworksazurevotingappredis-7450.$(k8sNamespaceForPR)'
     strategy:
