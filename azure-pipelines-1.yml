@@ -52,7 +52,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool: 'igniteDemoPool'
+    pool: 'igniteDemo'
     environment: 'zenithworksazurevotingappredis.ignitedemo1'
     strategy:
       runOnce:
@@ -85,7 +85,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy job
-    pool: 'igniteDemoPool'
+    pool: 'igniteDemo'
       
     environment: 'zenithworksazurevotingappredis.$(k8sNamespaceForPR)'
     strategy:
