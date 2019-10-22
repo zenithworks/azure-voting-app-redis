@@ -52,8 +52,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
+    pool: 'igniteDemoPool'
     environment: 'zenithworksazurevotingappredis.ignitedemo1'
     strategy:
       runOnce:
@@ -86,8 +85,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy job
-    pool:
-      vmImage: 'ubuntu-latest'
+    pool: 'igniteDemoPool'
       
     environment: 'zenithworksazurevotingappredis.$(k8sNamespaceForPR)'
     strategy:
