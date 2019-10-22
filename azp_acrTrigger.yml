@@ -21,36 +21,14 @@ variables:
 
 stages:
 - stage: Deploy
-  displayName: Deploy stage  
+  displayName: Deploy stage    
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool: 'igniteDemoPool'
+    pool: 'igniteDemo'
     environment: 'zenithworksazurevotingappredis.ignitedemo1'
     strategy:
-      canary:
-        increments: [25]
-        preDeploy:
-          steps:
-          - script:
-              echo $(strategy.name)
-              
+      runOnce:
         deploy:
-          steps:
-          - script: |
-              echo Strategy: $(strategy.name)
-              echo Increment: $(strategy.increment)
-          
-        postRouteTraffic:
-          pool: server
-          steps:
-            - script: echo Running Canary Analysis task
-        on:
-          failure:
-            steps:
-            - script: echo deployment failed...
-            
-          success:
-            steps:
-            - script: echo deployment succeeded...              
-            
+          steps:            
+            script: echo hello world
