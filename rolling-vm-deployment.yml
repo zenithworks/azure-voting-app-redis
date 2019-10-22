@@ -5,9 +5,9 @@ stages:
   jobs:  
   - deployment: VMDeploy
     displayName: Deploy to VM job
-    pool: Default
+    pool: igniteDemo
     environment:
-      name: Environment2
+      name: Rai-VM-Env
       resourceType: VirtualMachine
     strategy:
       rolling:
