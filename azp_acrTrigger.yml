@@ -7,7 +7,9 @@ resources:
     resourceGroup: raiyan-rg2
     registry: raireg1
     repository: zenithworksazurevotingappredis
-    trigger: true
+    trigger: 
+      tags:
+      - 2*
 
 
 
