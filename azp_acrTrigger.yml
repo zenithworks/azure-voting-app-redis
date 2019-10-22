@@ -19,6 +19,7 @@ variables:
   tag: '$(Build.BuildId)'
   imagePullSecret: 'raireg11795044f-auth'
 
+stages:
 - stage: Deploy
   displayName: Deploy stage  
   jobs:
