@@ -97,7 +97,7 @@ stages:
           - task: ReviewApp@0
             displayName: 'Create a new resource'
             inputs: 
-              resourceName: $(k8sNamespaceForPR)
+              resourceName: 'ignitedemo1'
 
           - task: Kubernetes@1
             displayName: 'kubectl create namespace'
