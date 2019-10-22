@@ -8,14 +8,6 @@ resources:
     registry: 'raireg1.azurecr.io'
     repository: zenithworksazurevotingappredis
 
-resources:
-  containers:
-  - container: ACRRes
-    type: ACR
-    azureSubscription: azrm
-    resourceGroup: gykuma-RG
-    registry: gykumaacr
-    repository: hello-world
 
 variables:
   system.debug: 'true'
