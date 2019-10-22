@@ -24,7 +24,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool: 'igniteDemoPool'
+    pool: 'igniteDemo'
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -45,7 +45,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool: 'igniteDemoPool'
+    pool: 'igniteDemo'
     environment: 'zenithworksazurevotingappredis-1182.ignitedemo1'
     strategy:
       canary:
