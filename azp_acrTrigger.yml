@@ -7,8 +7,7 @@ resources:
     registry: 'raireg1.azurecr.io'
     image: zenithworksazurevotingappredis
 
-resources:
-- repo: self
+
 
 variables:
   system.debug: 'true'
