@@ -48,7 +48,7 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/head/'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/'))
   jobs:
   - deployment: Deploy
     displayName: Deploy
