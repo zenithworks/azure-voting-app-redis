@@ -4,23 +4,23 @@
 
 trigger: none
 
+
 resources:
 - repo: self
 
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '706877ae-21b3-46a9-81ca-f13b60e1c3e4'
+  dockerRegistryServiceConnection: '69192e5f-a06a-4b2b-968f-d1dcbc9d67c0'
   imageRepository: 'zenithworksazurevotingappredis'
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'raireg19394ddc6-auth'
+  imagePullSecret: 'raireg17790599e-auth'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-  
-  k8sNamespaceForPR: 'igniteDemo1-reviewResorce9868'
+  vmImageName: 'ubuntu-latest'  
+  k8sNamespaceForPR: 'igniteDemo1-reviewapp-23423'
 
 stages:
 - stage: Build
@@ -28,8 +28,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool: 'igniteDemoPool'
-      
+    pool: 'igniteDemo'
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -47,12 +46,13 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/'))
+  condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool: 'igniteDemoPool'
-    environment: 'zenithworksazurevotingappredis-7450.ignitedemo1'
+    pool: 'igniteDemo'
+      
+    environment: 'zenithworksazurevotingappredis.ignitedemo1'
     strategy:
       runOnce:
         deploy:
@@ -75,7 +75,6 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-
 # Deploy all PR changes
 - stage: DeployPR
   displayName: Deploy PR review app
@@ -84,9 +83,9 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy job
-    pool: 'igniteDemoPool'
+    pool: 'igniteDemo'
       
-    environment: 'zenithworksazurevotingappredis-7450.$(k8sNamespaceForPR)'
+    environment: 'zenithworksazurevotingappredis.$(k8sNamespaceForPR)'
     strategy:
       runOnce:
         deploy:
@@ -94,7 +93,7 @@ stages:
           - task: ReviewApp@0
             displayName: 'Create a new resource'
             inputs: 
-              resourceName: 'ignitedemo1'
+              resourceName: ignitedemo1
 
           - task: Kubernetes@1
             displayName: 'kubectl create namespace'
