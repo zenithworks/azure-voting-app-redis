@@ -20,7 +20,7 @@ variables:
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'  
-  k8sNamespaceForPR: 'reviewappRes-23423'
+  k8sNamespaceForPR: 'reviewapp-96334'
 
 stages:
 - stage: Build
