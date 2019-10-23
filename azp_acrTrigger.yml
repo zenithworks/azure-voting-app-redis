@@ -13,6 +13,7 @@ resources:
     trigger: 
       tags:
       - 2*
+      - 1*
 
 
 
