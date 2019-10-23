@@ -59,15 +59,15 @@ stages:
               echo Strategy: $(strategy.name)
               echo Increment: $(strategy.increment)
 
-          #- task: KubernetesManifest@0
-          #  inputs:
-          #    action: 'deploy'
-          #    kubernetesServiceConnection: ''
-          #    namespace: 'default'
-          #    strategy: $(strategy.name)
-          #    percentage: $(strategy.increment)
-          #    manifests: 'manifest.yml'
-          #    imagePullSecrets: ''
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+           #   kubernetesServiceConnection: ''
+              namespace: 'default'
+              strategy: $(strategy.name)
+              percentage: $(strategy.increment)
+              manifests: 'manifest.yml'
+              imagePullSecrets: ''
         postRouteTraffic:
           pool: server
           steps:
