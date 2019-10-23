@@ -5,7 +5,7 @@ languages:
 products:
   - azure
   - azure-redis-cache
-description: "This sample creates a multi-container application in an Azure Kubernetes Service (AKS) cluster."
+description: "This sample creates a multi-container application in an Azure Kubernetes Service (AKS) cluster!"
 ---
 
 # Azure Voting App
