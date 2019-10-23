@@ -1,4 +1,7 @@
 
+trigger: none
+
+
 resources:
   containers:
   - container: myACRContainer  
