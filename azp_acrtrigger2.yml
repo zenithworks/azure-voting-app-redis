@@ -1,0 +1,42 @@
+
+trigger: none 
+
+resources:
+  containers:
+  - container: myACRContainer  
+    type: ACR
+    azureSubscription: 'RMPM (afc11291-9826-46be-b852-70349146ddf8)'
+    resourceGroup: raiyan-rg2
+    registry: raireg1
+    repository: zenithworksazurevotingappredis
+    trigger:
+      tags: 
+      - 5*
+      - 6*
+      - 7*
+
+
+
+variables:
+  system.debug: 'true'
+
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool: 'igniteDemo'
+    steps:
+    - task: Powershell@2
+      inputs:
+        targetType: inline
+        script: |
+          Write-Host $(resources.container.myACRContainer.type)
+          Write-Host $(resources.container.myACRContainer.registry)
+          Write-Host $(resources.container.myACRContainer.repository)
+          Write-Host $(resources.container.myACRContainer.tag)
+          Write-Host $(resources.container.myACRContainer.digest)
+          Write-Host $(resources.container.myACRContainer.location)
+    
