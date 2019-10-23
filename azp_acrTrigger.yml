@@ -3,7 +3,7 @@ resources:
   containers:
   - container: myACRContainer  
     type: ACR
-    azureSubscription: RMPM
+    azureSubscription: 'RMPM (afc11291-9826-46be-b852-70349146ddf8)'
     resourceGroup: raiyan-rg2
     registry: raireg1
     repository: zenithworksazurevotingappredis
