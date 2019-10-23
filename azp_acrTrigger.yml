@@ -1,6 +1,6 @@
 
-trigger: none
 
+trigger: none 
 
 resources:
   containers:
@@ -10,10 +10,7 @@ resources:
     resourceGroup: raiyan-rg2
     registry: raireg1
     repository: zenithworksazurevotingappredis
-    trigger: 
-      tags:
-      - 2*
-      - 1*
+    trigger: true
 
 
 
