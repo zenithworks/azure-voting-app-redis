@@ -4,7 +4,7 @@ pr: none
 
 resources:
   containers:
-  - container: myACRContainer  
+  - container: myACRContainer2  
     type: ACR
     azureSubscription: 'RMPM (afc11291-9826-46be-b852-70349146ddf8)'
     resourceGroup: raiyan-rg2
