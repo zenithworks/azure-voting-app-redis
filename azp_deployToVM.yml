@@ -7,7 +7,7 @@ stages:
   displayName: Deploy stage
   jobs:  
   - deployment: VMDeploy
-    displayName: Deploy to VM job
+    displayName: VMDeployJob
     pool: igniteDemo
     environment:
       name: vm-deploy
