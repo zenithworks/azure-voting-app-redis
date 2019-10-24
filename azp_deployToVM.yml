@@ -1,22 +1,47 @@
 trigger: none
+pr: none
 
-resources:
-- repo: self
 
-variables:
-  system.debug: 'true'
 stages:
-- stage: DeployStage
-  jobs:
-  - deployment: "DeploymentJob"
-      environment:
-        name: rai-vm
-        tags: prod
-        resourceType: virtualmachine
-      pool: igniteDemoPool
-      strategy:
-        runOnce:
-          deploy:
+- stage: Deploy
+  displayName: Deploy stage
+  jobs:  
+  - deployment: VMDeploy
+    displayName: Deploy to VM job
+    pool: igniteDemo
+    environment:
+      name: vm-deploy
+      resourceType: VirtualMachine
+    strategy:
+      rolling:
+        maxBatchSize: 2
+        preDeploy:
+          steps:
+            - script: echo Hello, world! This is pre-deploy
+              displayName: 'Run a one-line script'
+
+        deploy:
+          steps:
+            - script: echo Hello, world! This is deploy
+              displayName: 'Run a one-line script'
+
+        routeTraffic:
+          steps:
+            - script: echo Hello, world! This is routeTraffic
+              displayName: 'Run a one-line script'
+
+        postRouteTraffic:
+          steps:
+            - script: echo Hello, world! This is postRouteTraffic
+              displayName: 'Run a one-line script'
+
+        on:
+          failure:
             steps:
-            - script: echo Deploying to VM
-              displayName: VMDeployScript       
+            - script: echo Hello, world! This is on failure
+              displayName: 'Run a one-line script'
+
+          success:
+            steps:
+            - script: echo Hello, world! This is on success
+              displayName: 'Run a one-line script' 
