@@ -67,7 +67,9 @@ stages:
               namespace: 'default'
               strategy: $(strategy.name)
               percentage: $(strategy.increment)
-              manifests: 'manifests/deployment.yml'
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
               imagePullSecrets: ''
         postRouteTraffic:
           pool: server
