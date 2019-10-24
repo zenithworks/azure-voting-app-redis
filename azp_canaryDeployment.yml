@@ -13,7 +13,7 @@ variables:
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'raireg11795044f-auth'
+  imagePullSecret: 'raireg17790599e-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -59,7 +59,12 @@ stages:
           - script: |
               echo Strategy: $(strategy.name)
               echo Increment: $(strategy.increment)
-
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
