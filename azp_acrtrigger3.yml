@@ -29,9 +29,10 @@ stages:
       inputs:
         targetType: inline
         script: |
-          Write-Host $(resources.container.myACRContainer.type)
-          Write-Host $(resources.container.myACRContainer.registry)
-          Write-Host $(resources.container.myACRContainer.repository)
-          Write-Host $(resources.container.myACRContainer.tag)
-          Write-Host $(resources.container.myACRContainer.digest)
-          Write-Host $(resources.container.myACRContainer.location)
+          echo hello world
+          #Write-Host $(resources.container.myACRContainer.type)
+          #Write-Host $(resources.container.myACRContainer.registry)
+          #Write-Host $(resources.container.myACRContainer.repository)
+          #Write-Host $(resources.container.myACRContainer.tag)
+          #Write-Host $(resources.container.myACRContainer.digest)
+          #Write-Host $(resources.container.myACRContainer.location)
