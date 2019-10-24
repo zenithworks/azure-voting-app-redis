@@ -88,8 +88,8 @@ stages:
                 namespace: 'default'
                 strategy: $(strategy.name)
                 manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                  $(Pipeline.Workspace)/manifests/deployment.yml
+                  $(Pipeline.Workspace)/manifests/service.yml
           success:
             steps:
             - script: echo deployment succeeded...              
@@ -100,5 +100,5 @@ stages:
                 namespace: 'default'
                 strategy: $(strategy.name)
                 manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                  $(Pipeline.Workspace)/manifests/deployment.yml
+                  $(Pipeline.Workspace)/manifests/service.yml
