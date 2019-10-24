@@ -3,6 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 #test8
 
+trigger: none
 
 
 resources:
