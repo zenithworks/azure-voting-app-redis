@@ -85,7 +85,9 @@ stages:
                # kubernetesServiceConnection: ''
                 namespace: 'default'
                 strategy: $(strategy.name)
-                manifests: 'manifests/deployment.yml'
+                manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
           success:
             steps:
             - script: echo deployment succeeded...              
@@ -95,4 +97,6 @@ stages:
                # kubernetesServiceConnection: ''
                 namespace: 'default'
                 strategy: $(strategy.name)
-                manifests: 'manifests/deployment.yml'
+                manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
