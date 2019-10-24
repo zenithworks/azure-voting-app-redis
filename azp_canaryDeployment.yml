@@ -69,7 +69,7 @@ stages:
             inputs:
               action: 'deploy'
            #   kubernetesServiceConnection: ''
-              #namespace: 'default'
+              namespace: 'ignitedemo1'
               strategy: $(strategy.name)
               percentage: $(strategy.increment)
               manifests: |
@@ -93,7 +93,7 @@ stages:
               inputs:
                 action: 'reject'
                # kubernetesServiceConnection: ''
-              #  namespace: 'default'
+                namespace: 'ignitedemo1'
                 strategy: $(strategy.name)
                 manifests: |
                   $(Pipeline.Workspace)/manifests/deployment.yml
@@ -105,7 +105,7 @@ stages:
               inputs:
                 action: 'promote'
                # kubernetesServiceConnection: ''
-              #  namespace: 'default'
+                namespace: 'ignitedemo1'
                 strategy: $(strategy.name)
                 manifests: |
                   $(Pipeline.Workspace)/manifests/deployment.yml
