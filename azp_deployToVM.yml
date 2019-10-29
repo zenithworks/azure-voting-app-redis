@@ -10,7 +10,7 @@ stages:
     displayName: web
     pool: igniteDemo
     environment:
-      name: vm-deploy
+      name: Vm-Env
       resourceType: VirtualMachine
     strategy:
       rolling:
