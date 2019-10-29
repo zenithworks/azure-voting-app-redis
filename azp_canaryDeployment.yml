@@ -101,15 +101,4 @@ stages:
           success:
             steps:
             - script: echo deployment succeeded...              
-            - task: KubernetesManifest@0 
-              inputs:
-                action: 'promote'
-               # kubernetesServiceConnection: ''
-                namespace: 'ignitedemo1'
-                strategy: $(strategy.name)
-                manifests: |
-                  $(Pipeline.Workspace)/manifests/deployment.yml
-                  $(Pipeline.Workspace)/manifests/service.yml
-                imagePullSecrets: $(imagePullSecret)
-                containers: |
-                   $(containerRegistry)/$(imageRepository):$(tag)
+            
