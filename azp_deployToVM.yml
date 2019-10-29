@@ -8,7 +8,7 @@ stages:
   jobs:  
   - deployment: VMDeploy
     displayName: web
-    pool: igniteDemo
+    pool: demopool
     environment:
       name: Vm-Env
       resourceType: VirtualMachine
