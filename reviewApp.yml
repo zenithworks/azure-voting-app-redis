@@ -52,8 +52,7 @@ stages:
   - deployment: Deploy
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
     displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
+    # pool: Default
     environment: 'zenithworksazurevotingappredis-1288.ignitedemo1'
     strategy:
       runOnce:
