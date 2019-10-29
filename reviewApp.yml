@@ -29,7 +29,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    # pool: default
+    pool: Default
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -80,7 +80,7 @@ stages:
   - deployment: DeployPR
     displayName: Deploy PR
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
-    # pool: default
+    pool: Default
       
     environment: 'zenithworksazurevotingappredis-1288.$(k8sNamespaceForPR)'
     strategy:
