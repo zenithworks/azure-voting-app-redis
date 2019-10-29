@@ -49,7 +49,7 @@ stages:
     environment: 'zenithworksazurevotingappredis'
     strategy:
       canary:
-        increments: [25, 50]
+        increments: [25]
         preDeploy:
           steps:
           - script:
