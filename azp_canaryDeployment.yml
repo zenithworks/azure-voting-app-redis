@@ -13,7 +13,7 @@ variables:
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'raireg17790599e-auth'
+  imagePullSecret: 'raireg169723ae1-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
