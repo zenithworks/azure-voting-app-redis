@@ -45,8 +45,8 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool: 'igniteDemo'
-    environment: 'zenithworksazurevotingappredis.reviewapp-96334'
+    pool: 'demopool'
+    environment: 'zenithworksazurevotingappredis'
     strategy:
       canary:
         increments: [25, 50]
