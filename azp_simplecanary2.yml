@@ -1,6 +1,6 @@
 jobs:
 - deployment:
-  environment: PepsiProd
+  environment: PepsiProd.default
   pool: demopool
   strategy:                 
     canary:     
