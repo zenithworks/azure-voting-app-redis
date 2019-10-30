@@ -4,7 +4,7 @@ pr: none
 
 jobs:
 - deployment:
-  environment: PepsiProd.Default
+  environment: testEnv
   pool: 
     vmImageName: 'ubuntu-latest' 
   strategy:                 
