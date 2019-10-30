@@ -20,7 +20,7 @@ variables:
   imageRepository: 'zenithworksazurevotingappredis'
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: '$(resources.container.myACRContainer2.tag)'
   imagePullSecret: 'raireg11681552b-auth'
 
   # Agent VM image name
@@ -38,14 +38,13 @@ stages:
     - task: Powershell@2
       inputs:
         targetType: inline
-        script: |
-          echo hello world
-          #Write-Host $(resources.container.myACRContainer.type)
-          #Write-Host $(resources.container.myACRContainer.registry)
-          #Write-Host $(resources.container.myACRContainer.repository)
-          #Write-Host $(resources.container.myACRContainer.tag)
-          #Write-Host $(resources.container.myACRContainer.digest)
-          #Write-Host $(resources.container.myACRContainer.location)
+        script: |          
+          #Write-Host $(resources.container.myACRContainer2.type)
+          #Write-Host $(resources.container.myACRContainer2.registry)
+          #Write-Host $(resources.container.myACRContainer2.repository)
+          #Write-Host $(resources.container.myACRContainer2.tag)
+          #Write-Host $(resources.container.myACRContainer2.digest)
+          #Write-Host $(resources.container.myACRContainer2.location)
 
 - stage: Deploy
   displayName: Deploy stage
@@ -66,6 +65,7 @@ stages:
               echo $(strategy.name)
         deploy:
           steps:
+          - checkout: self
           - script: |
               echo Strategy: $(strategy.name)
               echo Increment: $(strategy.increment)
@@ -83,8 +83,8 @@ stages:
               strategy: $(strategy.name)
               percentage: $(strategy.increment)
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                $(System.DefaultWorkingDirectory)/manifests/deployment.yml
+                $(System.DefaultWorkingDirectory)/manifests/service.yml
               imagePullSecrets: $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
@@ -98,6 +98,7 @@ stages:
         on:
           failure:
             steps:
+            - checkout: self
             - script: echo deployment failed...
             - task: KubernetesManifest@0
               inputs:
@@ -106,8 +107,8 @@ stages:
                 namespace: 'ignitedemo1'
                 strategy: $(strategy.name)
                 manifests: |
-                  $(Pipeline.Workspace)/manifests/deployment.yml
-                  $(Pipeline.Workspace)/manifests/service.yml
+                  $(System.DefaultWorkingDirectory)/manifests/deployment.yml
+                  $(System.DefaultWorkingDirectory)/manifests/service.yml
           success:
             steps:
             - script: echo deployment succeeded...      
