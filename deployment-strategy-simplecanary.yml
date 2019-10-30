@@ -52,7 +52,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'zenithworksazurevotingappredis'
+    environment: 'zenithworksazurevotingappredis.ignitedemo1'
     strategy:
       canary:
         increments: [25, 50]
