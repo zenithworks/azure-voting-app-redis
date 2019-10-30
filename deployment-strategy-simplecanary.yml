@@ -72,7 +72,7 @@ stages:
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
           - task: KubernetesManifest@0
             inputs:
-              action: 'deploy'
+              #action: 'deploy'
            #   kubernetesServiceConnection: ''
               namespace: 'ignitedemo1'
               strategy: $(strategy.name)
@@ -96,7 +96,7 @@ stages:
             - script: echo deployment failed...
             - task: KubernetesManifest@0
               inputs:
-                action: 'reject'
+                #action: 'reject'
                # kubernetesServiceConnection: ''
                 namespace: 'ignitedemo1'
                 strategy: $(strategy.name)
