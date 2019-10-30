@@ -5,7 +5,8 @@ pr: none
 jobs:
 - deployment:
   environment: PepsiProd.Default
-  pool: default
+  pool: 
+    vmImageName: 'ubuntu-latest' 
   strategy:                 
     canary:     
       increments: [10,20] 
