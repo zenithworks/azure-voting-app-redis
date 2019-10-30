@@ -1,7 +1,7 @@
 jobs:
 - deployment:
   environment: PepsiProd
-  pool: default
+  pool: demopool
   strategy:                 
     canary:     
       increments: [10,20] 
