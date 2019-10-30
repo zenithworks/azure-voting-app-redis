@@ -8,12 +8,12 @@ variables:
 
   system.debug: 'true'
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'raireg1'
+  dockerRegistryServiceConnection: 'ec9464b4-a6ca-46d1-9512-f6db4c3eb5d1'
   imageRepository: 'zenithworksazurevotingappredis'
   containerRegistry: 'raireg1.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'raireg169723ae1-auth'
+  imagePullSecret: 'raireg11681552b-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -24,7 +24,8 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool: 'demopool'
+    pool:
+      vmImage: $(vmImageName)
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -45,7 +46,8 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    pool: 'demopool'
+    pool:
+      vmImage: $(vmImageName)
     environment: 'zenithworksazurevotingappredis'
     strategy:
       canary:
