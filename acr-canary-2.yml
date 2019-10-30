@@ -28,11 +28,11 @@ variables:
 
 
 stages:
-- stage: Build
-  displayName: Build stage
+- stage: preProd
+  displayName: Pre-Prod stage
   jobs:  
-  - job: Build
-    displayName: Build
+  - job: configUpload
+    displayName: configUpload
     pool: 'demopool'
     steps:
     - upload: manifests
@@ -49,8 +49,8 @@ stages:
           #Write-Host $(resources.container.myACRContainer2.location)
 
 - stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
+  displayName: Deploy Prod stage
+  dependsOn: preProd
   jobs:
   - deployment: Deploy
     displayName: Deploy    
