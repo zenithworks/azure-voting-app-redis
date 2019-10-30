@@ -1,6 +1,6 @@
 jobs:
 - deployment:
-  environment: PepsiProd.Default
+  environment: PepsiProd
   pool: default
   strategy:                 
     canary:     
