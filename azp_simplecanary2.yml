@@ -1,3 +1,7 @@
+trigger: none 
+pr: none
+
+
 jobs:
 - deployment:
   environment: PepsiProd.Default
