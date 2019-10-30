@@ -1,12 +1,7 @@
-trigger: none 
-pr: none
-
-
 jobs:
 - deployment:
-  environment: testEnv
-  pool: 
-    vmImageName: 'ubuntu-latest' 
+  environment: PepsiProd.Default
+  pool: default
   strategy:                 
     canary:     
       increments: [10,20] 
