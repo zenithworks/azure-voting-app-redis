@@ -10,7 +10,7 @@ stages:
     displayName: web
     pool: demopool
     environment:
-      name: Vm-Env
+      name: VM-Env
       resourceType: VirtualMachine
     strategy:
       rolling:
