@@ -1,0 +1,31 @@
+jobs:
+- deployment:
+  environment: PepsiProd.Default
+  pool: default
+  strategy:                 
+    canary:     
+      increments: [10,20] 
+      preDeploy:
+        # pool: default                                    
+        steps:          
+        - script: |
+            echo StrategyName: $(strategy.name)
+      deploy:
+        steps:
+        - script: |
+            echo Deploy: $(strategy.increment)
+            echo StrategyName: $(strategy.name)
+      routeTraffic:
+        steps:
+        - script: |
+            echo routeTraffic: $(strategy.increment)
+            echo StrategyName: $(strategy.name)
+      on:
+        failure:
+          steps:
+          - script: |
+              echo StrategyName: $(strategy.name)
+        success:
+          steps:
+          - script: |
+              echo StrategyName: $(strategy.name)
