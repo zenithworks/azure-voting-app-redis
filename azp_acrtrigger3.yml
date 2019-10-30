@@ -15,6 +15,16 @@ resources:
 
 variables:
   system.debug: 'true'
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'ec9464b4-a6ca-46d1-9512-f6db4c3eb5d1'
+  imageRepository: 'zenithworksazurevotingappredis'
+  containerRegistry: 'raireg1.azurecr.io'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+  imagePullSecret: 'raireg11681552b-auth'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
 
 
 stages:
@@ -36,3 +46,67 @@ stages:
           #Write-Host $(resources.container.myACRContainer.tag)
           #Write-Host $(resources.container.myACRContainer.digest)
           #Write-Host $(resources.container.myACRContainer.location)
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'zenithworksazurevotingappredis'
+    strategy:
+      canary:
+        increments: [25, 50]
+        preDeploy:
+          steps:
+          - script:
+              echo $(strategy.name)
+        deploy:
+          steps:
+          - script: |
+              echo Strategy: $(strategy.name)
+              echo Increment: $(strategy.increment)
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+           #   kubernetesServiceConnection: ''
+              namespace: 'ignitedemo1'
+              strategy: $(strategy.name)
+              percentage: $(strategy.increment)
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
+              
+        postRouteTraffic:
+          pool: server
+          steps:
+            - task: Delay@1
+              inputs:
+                delayForMinutes: '2'
+        on:
+          failure:
+            steps:
+            - script: echo deployment failed...
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'reject'
+               # kubernetesServiceConnection: ''
+                namespace: 'ignitedemo1'
+                strategy: $(strategy.name)
+                manifests: |
+                  $(Pipeline.Workspace)/manifests/deployment.yml
+                  $(Pipeline.Workspace)/manifests/service.yml
+          success:
+            steps:
+            - script: echo deployment succeeded...      
