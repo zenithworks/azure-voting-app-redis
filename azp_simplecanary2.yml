@@ -5,8 +5,7 @@ jobs:
   strategy:                 
     canary:     
       increments: [10,20] 
-      preDeploy:
-        # pool: default                                    
+      preDeploy:                                           
         steps:          
         - script: |
             echo StrategyName: $(strategy.name)
