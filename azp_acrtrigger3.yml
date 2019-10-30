@@ -35,6 +35,8 @@ stages:
     displayName: Build
     pool: 'demopool'
     steps:
+    - upload: manifests
+      artifact: manifests
     - task: Powershell@2
       inputs:
         targetType: inline
@@ -59,13 +61,11 @@ stages:
       canary:
         increments: [25, 50]
         preDeploy:
-          steps:
-          - checkout: self
+          steps:          
           - script:
               echo $(strategy.name)
         deploy:
-          steps:
-          - checkout: self
+          steps:          
           - script: |
               echo Strategy: $(strategy.name)
               echo Increment: $(strategy.increment)
@@ -83,8 +83,8 @@ stages:
               strategy: $(strategy.name)
               percentage: $(strategy.increment)
               manifests: |
-                $(System.DefaultWorkingDirectory)/manifests/deployment.yml
-                $(System.DefaultWorkingDirectory)/manifests/service.yml
+                  $(Pipeline.workspace)/manifests/deployment.yml
+                  $(Pipeline.workspace)/manifests/service.yml
               imagePullSecrets: $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
@@ -97,8 +97,7 @@ stages:
                 delayForMinutes: '2'
         on:
           failure:
-            steps:
-            - checkout: self
+            steps:            
             - script: echo deployment failed...
             - task: KubernetesManifest@0
               inputs:
@@ -107,8 +106,8 @@ stages:
                 namespace: 'ignitedemo1'
                 strategy: $(strategy.name)
                 manifests: |
-                  $(System.DefaultWorkingDirectory)/manifests/deployment.yml
-                  $(System.DefaultWorkingDirectory)/manifests/service.yml
+                  $(Pipeline.workspace)/manifests/deployment.yml
+                  $(Pipeline.workspace)/manifests/service.yml
           success:
             steps:
             - script: echo deployment succeeded...      
