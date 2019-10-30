@@ -28,8 +28,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool:
-      vmImage: $(vmImageName)
+    pool: demopool      
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -52,7 +51,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'zenithworksazurevotingappredis.ignitedemo1'
+    environment: 'zenithworksazurevotingappredis.igniteDemo1'
     strategy:
       canary:
         increments: [25, 50]
@@ -64,7 +63,26 @@ stages:
           steps:
           - script: |
               echo Strategy: $(strategy.name)
-              echo Increment: $(strategy.increment)          
+              echo Increment: $(strategy.increment)
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+          - task: KubernetesManifest@0
+            inputs:
+              action: 'deploy'
+           #   kubernetesServiceConnection: ''
+              namespace: 'ignitedemo1'
+              strategy: $(strategy.name)
+              percentage: $(strategy.increment)
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
               
         postRouteTraffic:
           pool: server
@@ -76,7 +94,15 @@ stages:
           failure:
             steps:
             - script: echo deployment failed...
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'reject'
+               # kubernetesServiceConnection: ''
+                namespace: 'ignitedemo1'
+                strategy: $(strategy.name)
+                manifests: |
+                  $(Pipeline.Workspace)/manifests/deployment.yml
+                  $(Pipeline.Workspace)/manifests/service.yml
           success:
             steps:
             - script: echo deployment succeeded...              
-            
