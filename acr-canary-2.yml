@@ -77,7 +77,7 @@ stages:
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
           - task: KubernetesManifest@0
             inputs:
-              action: 'deploy'
+              action: $(strategy.action)
            #   kubernetesServiceConnection: ''
               namespace: 'ignitedemo1'
               strategy: $(strategy.name)
