@@ -1,4 +1,4 @@
-#sdfgsdf
+# sdfgsdf
 
 trigger: none 
 pr: none
@@ -12,7 +12,7 @@ resources:
     resourceGroup: raiyan-rg2
     registry: raireg1
     repository: zenithworksazurevotingappredis
-    trigger: false
+    trigger: none
 
 
 variables:
