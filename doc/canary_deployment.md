@@ -71,6 +71,8 @@ Here is the syntax of the deployment strategies supported:
 
 ### RunOnce deployment strategy:
 
+RunOnce is the simplest deployment strategy wherein the 'deploy' job is run only once to execute the steps it contains. We would recommned this strategy, if you're just getting started with deployment jobs.
+
 ```YAML
 strategy: 
     runOnce:
@@ -81,6 +83,9 @@ strategy:
 ```
 
 ### Canary deployment strategy:
+
+Canary deployment strategy is an advance deployment strategy which helps in mitigating the risk involved in rolling new version of application. Using this you can reduce the risk by slowly rolling out the change to a small subset of users. As you gain more confidence in the new version, you can start releasing it to more servers in your infrastructure and routing more users to it.
+
 
 ```YAML
 strategy: 
@@ -211,7 +216,7 @@ jobs:
       on: 
         failure: 
           steps: 
-  - script: echo clean-up, rollback...   
+          - script: echo clean-up, rollback...   
         success: 
           steps: 
           - script: echo checks passed, notify... 
